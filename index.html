@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christmas Tree Calendar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .tree-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tree-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .box {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #c41e3a 0%, #165b33 100%);
+            border: 3px solid #ffd700;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .box:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 12px rgba(255, 215, 0, 0.5);
+            z-index: 10;
+        }
+
+        .box.opened {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #165b33;
+        }
+
+        .box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0%, 100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .trunk {
+            width: 40px;
+            height: 50px;
+            background: #8b4513;
+            border: 3px solid #654321;
+            border-radius: 5px;
+            margin-top: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-content img,
+        .modal-content video {
+            max-width: 100%;
+            max-height: 70vh;
+            border-radius: 10px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #165b33;
+            font-weight: bold;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 30px;
+            color: #666;
+            cursor: pointer;
+            background: none;
+            border: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: #f0f0f0;
+            color: #000;
+            transform: rotate(90deg);
+        }
+
+        .star {
+            position: absolute;
+            top: -40px;
+            font-size: 40px;
+            animation: twinkle 1.5s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0.6; transform: scale(1.2); }
+        }
+
+        @media (max-width: 600px) {
+            .box {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>🎄 Memory Advent Calendar 🎄</h1>
+    
+    <div class="tree-container">
+        <div class="star">⭐</div>
+        
+        <!-- Row 1: 1 box -->
+        <div class="tree-row">
+            <div class="box" data-day="25">25</div>
+        </div>
+        
+        <!-- Row 2: 2 boxes -->
+        <div class="tree-row">
+            <div class="box" data-day="24">24</div>
+            <div class="box" data-day="23">23</div>
+        </div>
+        
+        <!-- Row 3: 3 boxes -->
+        <div class="tree-row">
+            <div class="box" data-day="22">22</div>
+            <div class="box" data-day="21">21</div>
+            <div class="box" data-day="20">20</div>
+        </div>
+        
+        <!-- Row 4: 4 boxes -->
+        <div class="tree-row">
+            <div class="box" data-day="19">19</div>
+            <div class="box" data-day="18">18</div>
+            <div class="box" data-day="17">17</div>
+            <div class="box" data-day="16">16</div>
+        </div>
+        
+        <!-- Row 5: 5 boxes -->
+        <div class="tree-row">
+            <div class="box" data-day="15">15</div>
+            <div class="box" data-day="14">14</div>
+            <div class="box" data-day="13">13</div>
+            <div class="box" data-day="12">12</div>
+            <div class="box" data-day="11">11</div>
+        </div>
+        
+        <!-- Row 6: 5 boxes -->
+        <div class="tree-row">
+            <div class="box" data-day="10">10</div>
+            <div class="box" data-day="9">9</div>
+            <div class="box" data-day="8">8</div>
+            <div class="box" data-day="7">7</div>
+            <div class="box" data-day="6">6</div>
+        </div>
+        
+        <!-- Row 7: 5 boxes -->
+        <div class="tree-row">
+            <div class="box" data-day="1">1</div>
+            <div class="box" data-day="2">2</div>
+            <div class="box" data-day="3">3</div>
+            <div class="box" data-day="4">4</div>
+            <div class="box" data-day="5">5</div>
+        </div>
+        
+        <!-- Tree trunk -->
+        <div class="trunk"></div>
+    </div>
+
+    <!-- Modal for displaying content -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <div class="modal-header" id="modal-header">Day 1</div>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        // Sample content for each day (mix of images and videos)
+        const dayContent = {
+            1: { type: 'image', src: './media/test.jpg', alt: 'Day 1 Surprise' },
+            2: { type: 'image', src: 'https://picsum.photos/600/400?random=2', alt: 'Day 2 Surprise' },
+            3: { type: 'video', src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
+            4: { type: 'image', src: 'https://picsum.photos/600/400?random=4', alt: 'Day 4 Surprise' },
+            5: { type: 'image', src: 'https://picsum.photos/600/400?random=5', alt: 'Day 5 Surprise' },
+            6: { type: 'video', src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4' },
+            7: { type: 'image', src: 'https://picsum.photos/600/400?random=7', alt: 'Day 7 Surprise' },
+            8: { type: 'image', src: 'https://picsum.photos/600/400?random=8', alt: 'Day 8 Surprise' },
+            9: { type: 'image', src: 'https://picsum.photos/600/400?random=9', alt: 'Day 9 Surprise' },
+            10: { type: 'video', src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4' },
+            11: { type: 'image', src: 'https://picsum.photos/600/400?random=11', alt: 'Day 11 Surprise' },
+            12: { type: 'image', src: 'https://picsum.photos/600/400?random=12', alt: 'Day 12 Surprise' },
+            13: { type: 'image', src: 'https://picsum.photos/600/400?random=13', alt: 'Day 13 Surprise' },
+            14: { type: 'video', src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4' },
+            15: { type: 'image', src: 'https://picsum.photos/600/400?random=15', alt: 'Day 15 Surprise' },
+            16: { type: 'image', src: 'https://picsum.photos/600/400?random=16', alt: 'Day 16 Surprise' },
+            17: { type: 'image', src: 'https://picsum.photos/600/400?random=17', alt: 'Day 17 Surprise' },
+            18: { type: 'video', src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4' },
+            19: { type: 'image', src: 'https://picsum.photos/600/400?random=19', alt: 'Day 19 Surprise' },
+            20: { type: 'image', src: 'https://picsum.photos/600/400?random=20', alt: 'Day 20 Surprise' },
+            21: { type: 'image', src: 'https://picsum.photos/600/400?random=21', alt: 'Day 21 Surprise' },
+            22: { type: 'video', src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4' },
+            23: { type: 'image', src: 'https://picsum.photos/600/400?random=23', alt: 'Day 23 Surprise' },
+            24: { type: 'image', src: 'https://picsum.photos/600/400?random=24', alt: 'Day 24 Surprise' },
+            25: { type: 'video', src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4' }
+        };
+
+        // Add click event to all boxes
+        document.querySelectorAll('.box').forEach(box => {
+            box.addEventListener('click', function() {
+                const day = parseInt(this.getAttribute('data-day'));
+                openBox(day, this);
+            });
+        });
+
+        function openBox(day, boxElement) {
+            // Mark box as opened
+            boxElement.classList.add('opened');
+            
+            // Get content for this day
+            const content = dayContent[day];
+            
+            // Update modal header
+            document.getElementById('modal-header').textContent = `Day ${day} 🎁`;
+            
+            // Update modal body
+            const modalBody = document.getElementById('modal-body');
+            modalBody.innerHTML = '';
+            
+            if (content.type === 'image') {
+                const img = document.createElement('img');
+                img.src = content.src;
+                img.alt = content.alt || `Day ${day} Image`;
+                modalBody.appendChild(img);
+            } else if (content.type === 'video') {
+                const video = document.createElement('video');
+                video.src = content.src;
+                video.controls = true;
+                video.autoplay = true;
+                modalBody.appendChild(video);
+            }
+            
+            // Show modal
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('active');
+            
+            // Stop any playing videos
+            const video = modal.querySelector('video');
+            if (video) {
+                video.pause();
+            }
+        }
+
+        // Close modal when clicking outside content
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
+
