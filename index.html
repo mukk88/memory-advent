@@ -281,32 +281,38 @@
 
     <script>
         // Sample content for each day (mix of images and videos)
-        const dayContent = {
-            1: { type: 'image', src: './media/test.jpg', alt: 'Day 1 Surprise' },
-            2: { type: 'image', src: 'https://picsum.photos/600/400?random=2', alt: 'Day 2 Surprise' },
-            3: { type: 'video', src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
-            4: { type: 'image', src: 'https://picsum.photos/600/400?random=4', alt: 'Day 4 Surprise' },
-            5: { type: 'image', src: 'https://picsum.photos/600/400?random=5', alt: 'Day 5 Surprise' },
-            6: { type: 'video', src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4' },
-            7: { type: 'image', src: 'https://picsum.photos/600/400?random=7', alt: 'Day 7 Surprise' },
-            8: { type: 'image', src: 'https://picsum.photos/600/400?random=8', alt: 'Day 8 Surprise' },
-            9: { type: 'image', src: 'https://picsum.photos/600/400?random=9', alt: 'Day 9 Surprise' },
-            10: { type: 'video', src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4' },
-            11: { type: 'image', src: 'https://picsum.photos/600/400?random=11', alt: 'Day 11 Surprise' },
-            12: { type: 'image', src: 'https://picsum.photos/600/400?random=12', alt: 'Day 12 Surprise' },
-            13: { type: 'image', src: 'https://picsum.photos/600/400?random=13', alt: 'Day 13 Surprise' },
-            14: { type: 'video', src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4' },
-            15: { type: 'image', src: 'https://picsum.photos/600/400?random=15', alt: 'Day 15 Surprise' },
-            16: { type: 'image', src: 'https://picsum.photos/600/400?random=16', alt: 'Day 16 Surprise' },
-            17: { type: 'image', src: 'https://picsum.photos/600/400?random=17', alt: 'Day 17 Surprise' },
-            18: { type: 'video', src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4' },
-            19: { type: 'image', src: 'https://picsum.photos/600/400?random=19', alt: 'Day 19 Surprise' },
-            20: { type: 'image', src: 'https://picsum.photos/600/400?random=20', alt: 'Day 20 Surprise' },
-            21: { type: 'image', src: 'https://picsum.photos/600/400?random=21', alt: 'Day 21 Surprise' },
-            22: { type: 'video', src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4' },
-            23: { type: 'image', src: 'https://picsum.photos/600/400?random=23', alt: 'Day 23 Surprise' },
-            24: { type: 'image', src: 'https://picsum.photos/600/400?random=24', alt: 'Day 24 Surprise' },
-            25: { type: 'video', src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4' }
+        let dayContent = {
+            1: { type: 'image', src: './media/alaska-jul-2015.jpg', alt: 'alaska-jul-2015' },
+            2: { type: 'image', src: './media/athens-jul-2014.jpg', alt: 'athens-jul-2014' },
+            3: { type: 'image', src: './media/banff-Jul-2022.jpg', alt: 'banff-Jul-2022' },
+            4: { type: 'image', src: './media/bangkok-nov-2023.jpg', alt: 'bangkok-nov-2023' },
+            5: { type: 'image', src: './media/bend-apr-2021.jpg', alt: 'bend-apr-2021' },
+            6: { type: 'image', src: './media/betsy.jpg', alt: 'betsy' },
+            7: { type: 'image', src: './media/boston-May-2019.jpg', alt: 'boston-May-2019' },
+            8: { type: 'image', src: './media/charcoal.jpg', alt: 'charcoal' },
+            9: { type: 'image', src: './media/disneyland-dec-2021.jpg', alt: 'disneyland-dec-2021' },
+            10: { type: 'image', src: './media/first-baptism.jpg', alt: 'first-baptism' },
+            11: { type: 'image', src: './media/kelong-dec-2023.jpg', alt: 'kelong-dec-2023' },
+            12: { type: 'image', src: './media/komodo-jun-2024.jpg', alt: 'komodo-jun-2024' },
+            13: { type: 'image', src: './media/melbourne-dec-2017.jpg', alt: 'melbourne-dec-2017' },
+            14: { type: 'image', src: './media/meteora-jul-2014.jpg', alt: 'meteora-jul-2014' },
+            15: { type: 'image', src: './media/mexico-apr-2022.jpg', alt: 'mexico-apr-2022' },
+            16: { type: 'image', src: './media/missionpresident.jpg', alt: 'missionpresident' },
+            17: { type: 'image', src: './media/monterey-aug-2020.jpg', alt: 'monterey-aug-2020' },
+            18: { type: 'image', src: './media/moores.jpg', alt: 'moores' },
+            19: { type: 'image', src: './media/osaka-sep-2025.jpg', alt: 'osaka-sep-2025' },
+            20: { type: 'image', src: './media/peru-jun-2022.jpg', alt: 'peru-jun-2022' },
+            21: { type: 'image', src: './media/santorini-jul-2014.jpg', alt: 'santorini-jul-2014' },
+            22: { type: 'image', src: './media/sawtooth-aug-2021.jpg', alt: 'sawtooth-aug-2021' },
+            23: { type: 'image', src: './media/scotland-Jun-2017.jpg', alt: 'scotland-Jun-2017' },
+            24: { type: 'image', src: './media/taiwan-dec-2016.jpg', alt: 'taiwan-dec-2016' },
+            25: { type: 'image', src: './media/taiwan-jun-2023.jpg', alt: 'taiwan-jun-2023' },
+            26: { type: 'image', src: './media/tokyo-apr-2016.jpg', alt: 'tokyo-apr-2016' },
+            27: { type: 'image', src: './media/tokyo-mar-2025.jpg', alt: 'tokyo-mar-2025' },
+            28: { type: 'image', src: './media/turkey-apr-2024.jpg', alt: 'turkey-apr-2024' },
+            29: { type: 'image', src: './media/venice-jul-2014.jpg', alt: 'venice-jul-2014' },
+            30: { type: 'image', src: './media/vietnam-nov-2024.jpg', alt: 'vietnam-nov-2024' },
+            31: { type: 'image', src: './media/whistler-Feb-2022.png', alt: 'whistler-Feb-2022' }, 
         };
 
         // Add click event to all boxes
@@ -343,7 +349,11 @@
                 video.autoplay = true;
                 modalBody.appendChild(video);
             }
-            
+            // add alt text centralized in div to modal body
+            const altText = document.createElement('div');
+            altText.textContent = content.alt;
+            modalBody.appendChild(altText);
+            altText.style.textAlign = 'center';
             // Show modal
             document.getElementById('modal').classList.add('active');
         }
